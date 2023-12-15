@@ -1,0 +1,120 @@
+/**
+Internal working of HashMAP
+*/
+
+
+public class InternalWorkingOfHashMap {
+    public static void main(String[] args) {
+
+        /**
+         =============
+         HashMap
+         =============
+         -> HashMap implementation  map interface.
+         -> Used to store data in key-value format.
+         -> Insertion order is not maintained by HashMap.
+         -> Underlying data structure is hashtable.
+         -> HashMap work on Hashing principles
+         -> Default capacity is 16 and load factor is 0.75.
+
+          Hashing -> is the process of converting an object into an integer value from by using method hashCode();
+                  -> The integer value helps in indexing and fast searching.
+
+          -> HashMap contains an array of Node and Node can represent a class having the following objects :
+               1) int hash
+               2) K key
+               3) V value
+               4) Node next
+          -> It uses an array and LinkedList data structure internally for storing key & value.
+
+             Internal Structure or Working Of HashMap flow
+             ==============================================
+
+         map.put("key","value")  ---> Find hashCode() of the key :   -----> Find bucket index using hashCode;
+                                                 "key".hashCode()            HashCode & (length-1)
+                                                                                                 |
+                                                                                                 |
+                                             Yes                                     yes          |
+          Add to LinkedList by Replacing  <-----------    Key already present??      <------(Hash Collision)
+            existing equal node                         "key".equals("existing-key")            |
+                                                               |                                |
+                                                               | No                             | No
+                                                               |                                |
+                                                Add to linked List as next node             Simply add to Linked List
+                                                                                            as first Node
+         */
+
+        /** initially Empty hashMap: Here, the hashmap’s size is taken as 16. */
+        Map<String,Integer> map = new HashMap<>();
+
+         /** Inserting Key-Value Pair */
+        map.put("vishal",20);
+        map.put("ram",120);
+
+         /** Index Calculation in Hashmap
+                int index = hashCode(key) & (n-1);
+
+          Steps:
+          1) Calculate hash code of Key “vishal”. It will be generated as 118.
+          2) Calculate index by using index method it will be 6.
+          3) Create a node object as :
+             {
+                int hash = 118
+                Key key = "vishal"
+                Integer value = 20
+                Node next = null
+          }
+          Place this object at index 6, if no other object is presented there.
+          */
+
+         /** In Case of collision  */
+          map.put("vishal",100);
+
+        /** Index Calculation in Hashmap
+         int index = hashCode(key) & (n-1);
+
+         Steps:
+         1) Calculate hash code of Key vishal. It will be generated as 118.
+         2) Calculate index by using index method it will be 6.
+         3) Create a node object as :
+            {
+              int hash = 118
+              Key key = vishal
+              Integer value = 100
+              Node next = null
+            }
+
+         -> Place this object at index 6 if no other object is presented there.
+         -> In this case, a node object is found at index 6 – this is a case of collision.
+         -> In that case, check via the hashCode() and equals() method if both the keys are the same.
+         -> If keys are the same, replace the value with the current value.
+            Otherwise, connect this node object to the previous node object via linked list and both are
+            stored at index 6.
+         */
+
+        /**
+           get() method in HashMap
+           ==========================
+          -> get() method is used to get the value by its key.It will not fetch the value id you
+            don't know the key.
+          -> when get(K key) method called,it calculates the hash code of the key.
+              mao.get("ram");
+
+           Internal working of get()
+           ==========================
+           Fetch the data for key ram:
+
+                map.get("ram");
+         Steps:
+         1)Calculate hash code of Key {“sachin”}. It will be generated as 125.
+         2)Calculate index by using index method it will be 3.
+         3)Go to index 3 of the array and compare the first element’s key with the given key.
+           If both are equals then return the value, otherwise, check for the next element if it exists.
+         4)In our case, it is found as the first element and the returned value is 120.
+
+         */
+
+         System.out.println(map.get("ram"));
+
+    }
+}
